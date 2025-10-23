@@ -1,17 +1,21 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-class Player {
+#include <utility>
+
+class Player
+{
 public:
-  Player();
+  Player(char);
   void move(int, int);
-  int position();
+  std::pair<int, int> getPosition();
   void getInfo() const;
+  char role;
 
 private:
+  std::pair<int, int> position;
   int position_x;
   int position_y;
-  int type;
 };
 
 #endif

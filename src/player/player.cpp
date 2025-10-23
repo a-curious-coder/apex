@@ -1,16 +1,18 @@
 #include "player.hpp"
+#include <algorithm>
 #include <iostream>
+#include <utility>
 
-int position_x = 0;
-int position_y = 0;
+Player::Player(char initial_role) : role(initial_role) { position = {0, 0}; };
 
 void Player::move(int x, int y) {
-  position_x += x;
-  position_y += y;
+  x = std::clamp(x, 0, 1000);
+  y = std::clamp(y, 0, 1000);
+  position = {x, y};
 };
 
-int Player::position() { return 1; }
+std::pair<int, int> Player::getPosition() { return position; }
 
 void Player::getInfo() const {
-  std::cout << "This player's position is unknown" << std::endl;
+  std::cout << position.first << ", " << position.second << std::endl;
 }
