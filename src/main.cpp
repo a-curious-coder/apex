@@ -1,16 +1,45 @@
+#include "UseImGui.hpp"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 #include "player/player.hpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <cstdio>
 
 int main()
 {
-  // Player player('j');
-  // player.getInfo();
-  // int maxLoops = 600;
-  // while (maxLoops)
-  //{
-  //   auto [currentX, currentY] = player.getPosition();
-  //   player.move(--currentX, ++currentY);
-  //   player.getInfo();
-  //   --maxLoops;
-  // }
+  // Setup window
+  if (!glfwInit())
+    return 1;
+
+  // Set up OpenGL 3.3 Core Profile
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+  // Create window with graphics
+  GLFWwindow *window = glfwCreateWindow(1280, 720, "Apex Sim", NULL, NULL);
+
+  if (window == NULL)
+    return 1;
+
+  glfwMakeContextCurrent(window);
+  glfwSwapInterval(1); // Vsync
+
+  UseImGui myimgui;
+  myimgui.init(window);
+  while (!glfwWindowShouldClose(window))
+  {
+    // Checks for key bindings and mouse clicks
+    glfwPollEvents();
+    glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    myimgui.newFrame();
+    myimgui.update();
+    myimgui.render();
+    glfwSwapBuffers(window);
+  };
+  myimgui.shutdown();
+
   return 0;
 }

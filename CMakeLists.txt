@@ -14,7 +14,7 @@ set(IMGUI_SOURCES
     imgui/imgui_draw.cpp
     imgui/imgui_tables.cpp
     imgui/imgui_widgets.cpp
-    
+
     # Backends
     imgui/backends/imgui_impl_glfw.cpp
     imgui/backends/imgui_impl_opengl3.cpp
@@ -28,7 +28,7 @@ target_include_directories(imgui
     imgui
 )
 
-add_executable(${PROJECT_NAME} src/proof_of_concept.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/UseImGui.cpp)
 
 # Link ImGui, the external libraries, and set necessary include paths
 target_link_libraries(${PROJECT_NAME}
