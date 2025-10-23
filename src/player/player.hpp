@@ -6,16 +6,15 @@
 class Player
 {
 public:
-  Player(char);
-  void move(int, int);
-  std::pair<int, int> getPosition();
+  Player(char, bool);
+  void move(float, float);
+  std::pair<float, float> getPosition();
   void getInfo() const;
   char role;
+  bool team;
 
 private:
-  std::pair<int, int> position;
-  int position_x;
-  int position_y;
+  std::pair<float, float> position;
 };
 
 #endif

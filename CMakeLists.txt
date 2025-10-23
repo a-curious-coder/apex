@@ -28,7 +28,7 @@ target_include_directories(imgui
     imgui
 )
 
-add_executable(${PROJECT_NAME} src/main.cpp src/UseImGui.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/player/player.cpp src/UseImGui.cpp)
 
 # Link ImGui, the external libraries, and set necessary include paths
 target_link_libraries(${PROJECT_NAME}

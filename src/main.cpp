@@ -27,6 +27,19 @@ int main()
 
   UseImGui myimgui;
   myimgui.init(window);
+
+  Player players[10] = {
+      Player('j', false),
+      Player('p', false),
+      Player('b', false),
+      Player('b', false),
+      Player('b', false),
+      Player('j', true),
+      Player('p', true),
+      Player('b', true),
+      Player('b', true),
+      Player('b', true)};
+
   while (!glfwWindowShouldClose(window))
   {
     // Checks for key bindings and mouse clicks
@@ -35,7 +48,7 @@ int main()
 
     glClear(GL_COLOR_BUFFER_BIT);
     myimgui.newFrame();
-    myimgui.update();
+    myimgui.update(players);
     myimgui.render();
     glfwSwapBuffers(window);
   };
