@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Configuration
-MAIN_SRC="main.cpp"
+MAIN_SRC="src/main.cpp"
+PLAYER_SRC="src/player/player.cpp"
+USEIMGUI_SRC="src/UseImGui.cpp"
 IMGUI_CORE_SRCS="imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_widgets.cpp imgui/imgui_tables.cpp imgui/imgui_demo.cpp"
 IMGUI_BACKENDS_SRCS="imgui/backends/imgui_impl_glfw.cpp imgui/backends/imgui_impl_opengl3.cpp"
 INCLUDES="-Iimgui -Iimgui/backends"
@@ -12,6 +14,8 @@ echo "Starting Emscripten compilation..."
 # Execute the compilation command
 emcc \
     $MAIN_SRC \
+    $PLAYER_SRC \
+    $USEIMGUI_SRC \
     $IMGUI_CORE_SRCS \
     $IMGUI_BACKENDS_SRCS \
     $INCLUDES \
@@ -28,4 +32,3 @@ if [ $? -eq 0 ]; then
 else
     echo "Compilation failed."
 fi
-

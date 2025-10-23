@@ -6,6 +6,28 @@
 #include <GLFW/glfw3.h>
 #include <cstdio>
 
+// --- Emscripten Headers for Web Compatibility ---
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
+GLFWwindow *window = nullptr;
+UseImGui myimgui;
+Player players[10];
+
+void main_loop(void *arg)
+{
+  // Checks for key bindings and mouse clicks
+  glfwPollEvents();
+  glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+
+  glClear(GL_COLOR_BUFFER_BIT);
+  myimgui.newFrame();
+  myimgui.update(players);
+  myimgui.render();
+  glfwSwapBuffers(window);
+}
+
 int main()
 {
   // Setup window
@@ -17,42 +39,38 @@ int main()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
   // Create window with graphics
-  GLFWwindow *window = glfwCreateWindow(1280, 720, "Apex Sim", NULL, NULL);
+  window = glfwCreateWindow(1280, 720, "Apex Sim", NULL, NULL);
 
   if (window == NULL)
     return 1;
-
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1); // Vsync
 
-  UseImGui myimgui;
   myimgui.init(window);
 
-  Player players[10] = {
-      Player('j', false),
-      Player('p', false),
-      Player('b', false),
-      Player('b', false),
-      Player('b', false),
-      Player('j', true),
-      Player('p', true),
-      Player('b', true),
-      Player('b', true),
-      Player('b', true)};
+  players[0] = Player('j', false);
+  players[1] = Player('p', false);
+  players[2] = Player('b', false);
+  players[3] = Player('b', false);
+  players[4] = Player('b', false);
+  players[5] = Player('j', true);
+  players[6] = Player('p', true);
+  players[7] = Player('b', true);
+  players[8] = Player('b', true);
+  players[9] = Player('b', true);
 
+// Desktop loop (retains original behavior for non-Emscripten compilation)
+#ifdef __EMSCRIPTEN__
+  // Use Emscripten's main loop management for web compatibility
+  // Passes the 'window' pointer as the 'arg' to main_loop(void* arg)
+  emscripten_set_main_loop_arg(&main_loop, 0, 0, true);
+#else
   while (!glfwWindowShouldClose(window))
   {
-    // Checks for key bindings and mouse clicks
-    glfwPollEvents();
-    glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-    myimgui.newFrame();
-    myimgui.update(players);
-    myimgui.render();
-    glfwSwapBuffers(window);
+    main_loop(0);
   };
-  myimgui.shutdown();
+#endif
 
-  return 0;
+myimgui.shutdown();
+return 0;
 }

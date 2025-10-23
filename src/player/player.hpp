@@ -6,6 +6,7 @@
 class Player
 {
 public:
+  Player();
   Player(char, bool);
   void move(float, float);
   std::pair<float, float> getPosition();

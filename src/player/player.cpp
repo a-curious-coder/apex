@@ -3,6 +3,7 @@
 #include <iostream>
 #include <utility>
 
+Player::Player() {};
 Player::Player(char initial_role, bool initial_team)
     : role(initial_role), team(initial_team), position{500, 500} {}
 
